@@ -1,0 +1,63 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;\csgray\c100000;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+// Exercise 21.8 by Aditya Mehta\
+\
+import java.util.*;\
+import java.io.*;\
+\
+public class Excercise21_8 \{\
+    public static void main(String[] args) \{\
+\
+        Scanner scanner = new Scanner(System.in);\
+        System.out.print("Enter the file path: ");\
+        File file = new File(scanner.next());\
+        if (!file.isFile()) \{\
+            System.out.println(file + " is not a file.");\
+        \}\
+        String[] words;\
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) \{\
+\
+            StringBuilder buffer = new StringBuilder(10000);\
+            String s;\
+            while ((s = in.readLine()) != null)\
+                buffer.append(s).append("\\n");\
+\
+            words = buffer.toString().split("[0-9]+|\\\\W+");\
+\
+\
+        \} catch (IOException ex) \{\
+            words = new String[1];\
+            System.out.println("Error opening file...");\
+            System.exit(0);\
+        \}\
+\
+        // Create a TreeMap to hold words as key and count as value\
+        Map<String, Integer> map = new TreeMap<>();\
+\
+        for (String word1 : words) \{\
+            String key = word1.toLowerCase();\
+\
+            if (key.length() > 0) \{\
+                if (!map.containsKey(key)) \{\
+                    map.put(key, 1);\
+                \} else \{\
+                    int value = map.get(key);\
+                    value++;\
+                    map.put(key, value);\
+                \}\
+            \}\
+        \}\
+\
+        // Display key and value for each entry\
+        map.forEach((k, v) -> System.out.println(k + "\\t" + v));\
+\
+\
+    \}\
+\
+\}}
